@@ -2,19 +2,15 @@ import express from "express";
 import { createServer } from "http";
 import WebSocket from "ws";
 
-import { startApp } from "./config/server";
-
 const app = express();
 const server = createServer(app);
 const port = 3000;
 
 const wss = new WebSocket.Server({ server });
 
-startApp();
+import teste from "./routes/userRoute";
 
-app.get("/", (req, res) => {
-   res.send("hello");
-});
+app.use(teste);
 
 wss.on("connection", (ws) => {
    console.log("Cliente conectado");

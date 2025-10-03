@@ -41,8 +41,8 @@ export const updadeUser = async (req: express.Request, res: express.Response) =>
       user.save();
 
       return res.status(200).json(user).end();
-   } catch (erro) {
-      console.log(erro);
+   } catch (error) {
+      console.log(error);
       return res.send(400);
    }
 }

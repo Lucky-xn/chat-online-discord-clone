@@ -4,7 +4,7 @@ import {get, merge } from 'lodash';
 import { getUserBySessionToken } from '../config/db/schemas/users';
 
 
-export const isAutenticated = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const isAuthenticated = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
    try {
       const sessionToken = req.cookies['COOKIE-AUTH'];
 

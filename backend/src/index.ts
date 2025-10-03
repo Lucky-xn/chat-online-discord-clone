@@ -1,38 +1,37 @@
 import express from "express";
-import { createServer } from "http";
-import WebSocket from "ws";
+import http from "http";
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
+import cors from 'cors';
+import mongoose from "mongoose";
+
+
+import router from './router/index';
+// import WebSocket from "ws";
 
 const app = express();
-const server = createServer(app);
-const port = 3000;
 
-const wss = new WebSocket.Server({ server });
+app.use(cors({
+   credentials: true,
+}));
 
-import teste from "./routes/userRoute";
+app.use(compression());
+app.use(cookieParser());
+app.use(bodyParser.json());
 
-app.use(teste);
-
-wss.on("connection", (ws) => {
-   console.log("Cliente conectado");
-   ws.send("oioi");
+const server = http.createServer(app);
 
 
-   ws.on("message", (message) => {
-      console.log(`Mensagem recebida: ${message}`);
-
-      wss.clients.forEach((client) => {
-         if (client !== ws && client.readyState === WebSocket.OPEN) {
-            client.send(String(message));
-         }
-      });
-
-   });
-
-   ws.on("close", () => {
-      console.log("Um cliente se desconectou");
-   });
+server.listen('3030', () => {
+   console.log(`Servidor rodando em http://localhost:3030`);
 });
 
-server.listen(port, () => {
-   console.log(`Servidor rodando na porta ${port}`);
-});
+const MONGO_URL = 'mongodb+srv://Lucky:Lucky@lucky.upiat22.mongodb.net/?retryWrites=true&w=majority&appName=Lucky';
+
+mongoose.Promise = Promise;
+mongoose.connect(MONGO_URL);
+mongoose.connection.on('connection', () => console.log('oi'))
+mongoose.connection.on('erro', (error: Error) => console.log(error))
+
+app.use('/', router())

@@ -1,15 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "commonjs",
-    "strict": true,
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
+    "module": "NodeNext",
+    "baseUrl": "src",
+    "outDir": "dist",
     "sourceMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "esModuleInterop": true
+    "noImplicitAny": true,
   },
   "include": ["src/**/*"]
 }
